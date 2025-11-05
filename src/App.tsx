@@ -1,17 +1,20 @@
 import './App.scss';
-import { useState } from 'react';
 import usersFromServer from './api/users';
 import todosFromServer from './api/todos';
 import { TodoList } from './components/TodoList';
 import { Todo } from './api/type/type';
+import { useMemo, useState } from 'react';
 
 export const App = () => {
-  const preparedTodos: Todo[] = todosFromServer.map(todo => ({
-    ...todo,
-    user: usersFromServer.find(user => user.id === todo.userId)!,
-  }));
+  const preparedTodos: Todo[] = useMemo(() => {
+    return todosFromServer.map(todo => ({
+      ...todo,
+      user: usersFromServer.find(user => user.id === todo.userId)!,
+    }));
+  }, []);
 
   const [todos, setTodos] = useState<Todo[]>(preparedTodos);
+
   const [title, setTitle] = useState('');
   const [userId, setUserId] = useState('');
   const [titleError, setTitleError] = useState('');

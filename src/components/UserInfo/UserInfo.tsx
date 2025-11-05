@@ -2,14 +2,10 @@ import React from 'react';
 import { User } from '../../api/type/type';
 
 type Props = {
-  user?: User;
+  user: User; // now required
 };
 
 export const UserInfo: React.FC<Props> = ({ user }) => {
-  if (!user) {
-    return null;
-  }
-
   const { name, email } = user;
 
   return (
